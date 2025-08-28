@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+/.gemini-specs/add-prisma-to-page
+
+/src/generated/prisma
