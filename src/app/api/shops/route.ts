@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 import { Shop } from "@/types";
- 
+
 class APIError extends Error {
   constructor(public status: number, message: string) {
     super(message);
     this.name = "APIError";
   }
 }
- 
+
 async function fetchHotpepperData(url: string): Promise<Shop[]> {
   const response = await fetch(url);
   if (!response.ok) {
@@ -50,9 +50,17 @@ export async function GET(request: Request) {
       format: "json",
       large_area: searchParams.get("large_area") || "Z098",
     });
+    
  
     const keyword = searchParams.get("keyword");
     if (keyword) query.set("keyword", keyword);
+
+    const specialCategory = searchParams.get("special_category");
+    if (specialCategory) query.set("special_category", specialCategory);
+
+    const privateRoom = searchParams.get("private_room");
+    if (privateRoom) query.set("private_room", privateRoom);
+    
  
     const url = `https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?${query.toString()}`;
     const data = await fetchHotpepperData(url);

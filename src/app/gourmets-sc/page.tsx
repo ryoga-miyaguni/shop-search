@@ -4,6 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
+import Link from "next/link";
+
  
 async function fetchShops(keyword?: string): Promise<Shop[]> {
   const query = new URLSearchParams();
@@ -52,6 +55,7 @@ export default async function GourmetsPage({
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 w-full">
         {shops.length > 0 ? (
           shops.map((shop) => (
+            <Link href={`/shops/${shop.id}`} key={shop.id} className="block">
             <Card key={shop.id}>
               <CardHeader className="space-y-4 p-6">
                 <Avatar className="w-12 h-12">
@@ -65,6 +69,7 @@ export default async function GourmetsPage({
                 <p>{shop.genre?.name || "ジャンル情報なし"}</p>
               </CardContent>
             </Card>
+            </Link>
           ))
         ) : (
           <p>店舗が見つかりません</p>
