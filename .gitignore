@@ -42,4 +42,6 @@ next-env.d.ts
 
 /.gemini-specs
 
+/src/app/api/reviews
+
 /src/generated/prisma
