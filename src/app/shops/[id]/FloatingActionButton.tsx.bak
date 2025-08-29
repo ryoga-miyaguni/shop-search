@@ -1,0 +1,21 @@
+// ★主な追加・変更点: クリックイベントを扱うため、クライアントコンポーネントとして定義します。
+"use client";
+
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+
+export default function FloatingActionButton() {
+  const handleClick = () => {
+    // TODO: レビュー投稿フォームを開くなどの処理を将来的に実装
+    console.log("Floating action button clicked!");
+  };
+
+  return (
+    <Button
+      className="fixed bottom-6 right-6 h-16 w-16 rounded-full shadow-lg"
+      onClick={handleClick}
+    >
+      <Plus className="h-8 w-8" />
+    </Button>
+  );
+}

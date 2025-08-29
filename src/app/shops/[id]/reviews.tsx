@@ -1,6 +1,6 @@
 // ★主な追加・変更点: データベースと通信するためのPrismaをインポートします。
 import prisma from "@/lib/prisma";
-
+import FloatingActionButton from "./FloatingActionButton";
 // propsで受け取る shopId の型定義はそのまま使います。
 interface ShopReviewsProps {
   shopId: string;
@@ -48,7 +48,9 @@ export default async function ShopReviews({ shopId }: ShopReviewsProps) {
         ))
       ) : (
         <p className="text-gray-500 p-4">No reviews found for this shop.</p>
-      )}
+      )} 
+    <FloatingActionButton />
     </div>
+
   );
 }
