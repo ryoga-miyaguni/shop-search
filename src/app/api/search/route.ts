@@ -8,7 +8,7 @@ interface SearchBody {
   basho?: string;     // キーワード (場所/自由語)
   janru?: string;     // ジャンル (genre コード)
   kane?: string;      // 予算 (budget コード)
-  ninzu?: string;     // 人数 (現在ロジック未使用)
+  ninzu?: string;     // 人数 (party_capacity)
   kodawari?: string[];// こだわりフラグ配列
   count?: number;     // 1ページ件数
   start?: number;     // 開始位置 (1 始まり)
@@ -52,11 +52,19 @@ function buildParams(body: SearchBody, apiKey: string): URLSearchParams {
   if (body.start && body.start > 0) params.set("start", String(body.start));
 
   // キーワード
-  if (body.basho) params.set("keyword", body.basho);
+  if (body.basho) {
+    params.set("keyword", body.basho);
+  } else if (body.ninzu) {
+    // 人数のみ指定されている場合は、デフォルトで「那覇市おもろまち」をキーワードにする
+    params.set("keyword", "那覇市おもろまち");
+  }
+  
   // ジャンル
   if (body.janru) params.set("genre", body.janru);
   // 予算
   if (body.kane) params.set("budget", body.kane);
+  // 人数
+  if (body.ninzu) params.set("party_capacity", body.ninzu);
   // ★ 追加: 特集カテゴリ
   if (body.special_category) params.set("special_category", body.special_category);
 
