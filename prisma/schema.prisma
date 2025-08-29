@@ -12,7 +12,7 @@ datasource db {
 
 model Review {
   id          BigInt   @id @default(autoincrement())
-  store_id    BigInt
+  store_id    String
   employee_id BigInt
   usecase     Int?
   atmosphere  Int?

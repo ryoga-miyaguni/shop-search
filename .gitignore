@@ -40,6 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-/.gemini-specs/add-prisma-to-page
+/.gemini-specs
 
 /src/generated/prisma
