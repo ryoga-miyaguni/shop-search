@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { Shop } from "@/types";
-import Footer from"@/components/footer";
+import Footer from "@/components/footer";
 import ShopDetails from "./shop-details";
 import ShopReviews from "./reviews";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -23,50 +23,76 @@ export default async function ShopPage({ params }: { params: { id: string } }) {
   if (!shop) notFound();
 
   return (
-    <div className="h-screen flex flex-col">
-      {/* ヘッダー */}
-      <Header />
+    <div className="flex flex-col bg-gray-50">
+      {/* 固定ヘッダー（ナビゲーション用）*/}
+      <div className="fixed top-0 left-0 right-0 z-30 bg-white shadow-sm">
+        <Header />
+      </div>
 
-      {/* 画像＋店名＋タブを固定 */}
-      <div className="sticky top-0 z-20 bg-white">
-        {shop.photo?.pc?.l && (
-          <div className="w-full h-[30vh] relative">
-            <Image src={shop.photo.pc.l} alt={shop.name} fill className="object-cover" />
-          </div>
-        )}
-        <div className="px-4 py-2 text-center">
-          <h2 className="text-2xl font-extrabold">{shop.name}</h2>
-          <BackButton />
-          <div className="mt-2 h-1 w-20 bg-blue-500 mx-auto rounded-full"></div>
-        </div>
+      {/* 左上に重ねる戻るボタン */}
+      <div className="fixed top-3 left-3 z-40">
+        <BackButton />
+      </div>
 
+
+      <main className="pt-16">
+        {/* 店舗画像セクション */}
+        <section className="relative w-full h-[35vh] overflow-hidden">
+          {shop.photo?.pc?.l && (
+            <Image
+              src={shop.photo.pc.l}
+              alt={shop.name}
+              fill
+              className="object-cover transition-transform duration-500 ease-in-out hover:scale-105"
+            />
+          )}
+        </section>
+        
         <Tabs defaultValue="info">
-          <TabsList className="w-full flex justify-center bg-white">
-            <TabsTrigger value="info" className="font-bold px-6 py-2">
-              店舗情報
-            </TabsTrigger>
-            <TabsTrigger value="reviews" className="font-bold px-6 py-2">
-              レビュー
-            </TabsTrigger>
-          </TabsList>
+          {/* 店舗名とタブ（sticky部分） */}
+          <div className="sticky top-14 z-20 w-full bg-white shadow-md">
+            <div className="mx-auto max-w-4xl px-4 py-3 sm:px-6">
+              <div className="flex flex-col items-center">
+                <h1 className="text-2xl font-extrabold text-gray-900 text-center">
+                  {shop.name}
+                </h1>
+                <p className="mt-1 text-sm text-gray-500 text-center">
+                  {shop.genre.name}
+                </p>
+              </div>
 
-          {/* タブの内容 */}
-          <TabsContent value="info">
-            <div className="overflow-y-auto" style={{ maxHeight: "calc(100vh - 30vh - 6rem)" }}>
+              <div className="mt-3">
+                <TabsList className="grid w-full grid-cols-2 bg-gray-100 p-1 rounded-xl">
+                  <TabsTrigger
+                    value="info"
+                    className="data-[state=active]:bg-white data-[state=active]:text-gray-900 font-semibold rounded-lg transition-all"
+                  >
+                    店舗情報
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="reviews"
+                    className="data-[state=active]:bg-white data-[state=active]:text-gray-900 font-semibold rounded-lg transition-all"
+                  >
+                    レビュー
+                  </TabsTrigger>
+                </TabsList>
+              </div>
+            </div>
+          </div>
+
+          {/* タブの中身 */}
+          <div className="mx-auto max-w-4xl px-4 pt-2 pb-4 sm:px-6 sm:pt-3 sm:pb-6">
+            <TabsContent value="info">
               <ShopDetails shop={shop} />
-            </div>
-          </TabsContent>
-
-          <TabsContent value="reviews">
-            <div className="overflow-y-auto" style={{ maxHeight: "calc(100vh - 30vh - 6rem)" }}>
+            </TabsContent>
+            <TabsContent value="reviews">
               <ShopReviews shopId={shop.id} />
-            </div>
-          </TabsContent>
+            </TabsContent>
+          </div>
         </Tabs>
-      </div>
-      <div className="overflow-y-auto">
-        <Footer />
-      </div>
+      </main>
+
+      <Footer />
     </div>
   );
 }
