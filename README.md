@@ -1,5 +1,5 @@
 5daysのインターンシップで作成したホットペッパーグルメAPIを使った店舗検索WEBアプリ
-店舗の詳細ページを担当した
+（店舗の詳細ページを担当）
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
